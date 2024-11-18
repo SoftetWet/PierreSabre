@@ -63,15 +63,15 @@ public class Humain {
 		
 	}
 	
-	public void repondre(Humain humain1, Humain humain2) {
-		humain2.direBonjour();
-		humain2.memoriser(humain1);
+	public void repondre(Humain humain) {
+		direBonjour();
+		memoriser(humain);
 	}
 	
 	public void faireConnaissanceAvec(Humain autreHumain) {
 		direBonjour();
-		repondre(this,autreHumain);
-		memoriser
+		autreHumain.repondre(this);
+		autreHumain.memoriser(this);
 	}
 	
 }
