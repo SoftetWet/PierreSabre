@@ -2,51 +2,76 @@ package personnages;
 
 public class Humain {
 	private String nom;
-	private String boissonfavorite;
-	private int argent;
-	
-	public Humain(String nom,String boissonfavorite,int argent) {
+	private String boissonFavorite;
+	private int nbArgent;
+	protected int nbConnaissance;
+	protected Humain[] memoire = new Humain[nbConnaissance];
+
+	public Humain(String nom, String boissonFavorite, int nbArgent) {
 		this.nom = nom;
-		this.boissonfavorite = boissonfavorite;
-		this.argent = argent;
+		this.boissonFavorite = boissonFavorite;
+		this.nbArgent = nbArgent;
 	}
-	
+
 	public String getNom() {
 		return nom;
 	}
-	
+
 	public int getArgent() {
-		return argent;
+		return nbArgent;
 	}
-	
-	public void parler(String texte) {
-		System.out.println("(" + nom + ") -" + texte );
+
+	protected void parler(String texte) {
+		System.out.println("(" + nom + ") : " + texte);
 	}
-	
-	public void direBonjour() {
-		parler("Bonjour ! Je m'appelle " + nom + " et j'aime boire du " + boissonfavorite);
-	}
-	
+
 	public void boire() {
-		parler("Mmmm, un bon verre de " + boissonfavorite + " ! GLOUPS !");
+		parler("Mmm,  un bon verre de " + boissonFavorite + " ! GLOUPS !");
 	}
-	
-	public void acheter(String bien,int prix) {
-		if (argent > prix ) { 	
-			parler("J'ai " + argent + " sous en poche. Je vais pouvoir m'offrir" + bien + " à " + prix + " sous.");
+
+	public void acheter(String bien, int prix) {
+		if (nbArgent > prix) {
+			parler("J ai " + nbArgent + " sous en poche. Je vais pouvoir m offrir " + bien +" à " + prix + " sous.");
 			perdreArgent(prix);
+			if (bien != null && bien.equals("une boisson")) {
+				boire();
+				}
 		} else {
-			parler("Je n'ai plus que " + argent + " sous en poche. Je ne peux même pas m'offrir un kimono "+ prix +"sous.");
+			parler("J n'ai plus que " + nbArgent + " sous en poche. Je ne  peux  meme pas m'offrir " + bien + " à "
+					+ prix + " sous.");
 		}
 	}
-	
-	private void gagnerArgent(int gain) {
-		argent += gain;
+
+	public int gagnerArgent(int gain) {
+		nbArgent += gain;
+		return nbArgent;
+	}
+
+	public int perdreArgent(int perte) {
+		if ((nbArgent - perte) > 0) {
+			nbArgent -= perte;
+			return nbArgent;
+		}
+		return 0;
+	}
+
+	public void direBonjour() {
+		parler("Bonjour ! je m'appelle " + nom + " et j aime boire du " + boissonFavorite);
 	}
 	
-	private void perdreArgent(int perte) {
-		argent -=  perte;
+	public void memoriser(Humain humain) {
+		
 	}
 	
+	public void repondre(Humain humain1, Humain humain2) {
+		humain2.direBonjour();
+		humain2.memoriser(humain1);
+	}
+	
+	public void faireConnaissanceAvec(Humain autreHumain) {
+		direBonjour();
+		repondre(this,autreHumain);
+		memoriser
+	}
 	
 }
